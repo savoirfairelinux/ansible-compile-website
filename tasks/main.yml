@@ -1,0 +1,21 @@
+---
+- name: Ensure that wget is present
+  apt:
+    name: wget
+    state: present
+
+- name: Crawling the whole site in order to fill it's cache (can take a while)
+  shell: >
+    wget --recursive --no-clobber --page-requisites --html-extension --convert-links \
+         --restrict-file-names=windows --domains {{ compile_website_host }} --no-parent \
+         --no-check-certificate "{{ compile_website_scheme }}://{{ compile_website_host }}{{ compile_website_basepath }}" \
+         -w "{{ compile_website_sleep }}" -o /dev/null > /dev/null 2>&1
+  args:
+    chdir: /tmp/
+  changed_when: false
+
+- name: Removing data gathered by wget
+  shell: rm -rf {{ compile_website_scheme }}
+  args:
+    chdir: /tmp/
+  changed_when: false

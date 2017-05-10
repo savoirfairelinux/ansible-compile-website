@@ -1,0 +1,11 @@
+# http or https
+compile_website_scheme: "https"
+
+# the hostname / domain name
+compile_website_host: ""
+
+# the base where to crawl
+compile_website_basepath: "/"
+
+# number of seconds to sleep between each requests
+compile_website_sleep: 1
